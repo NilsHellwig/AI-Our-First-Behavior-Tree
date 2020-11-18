@@ -1,3 +1,3 @@
 # AI-Our-First-Behavior-Tree
 
-von Thilbo Hohl, Nils Constantin Hellwig und Thomas Hofbauer
+von Thilo Hohl, Nils Constantin Hellwig und Thomas Hofbauer
