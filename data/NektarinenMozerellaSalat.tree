@@ -1,0 +1,50 @@
+import waschen:"zubereitung.Waschen"
+import zerkleinern:"zubereitung.Zerkleinern"
+import trocknen:"zubereitung.Trocknen"
+import zupfen:"zubereitung.Zupfen"
+import hinzugeben:"zubereitung.Hinzugeben"
+
+sequence
+    bereitstellen zutat:"Tomate" name:"z1" menge:4.0
+    bereitstellen zutat:"Nektarine" name:"z2" menge:3.0
+    bereitstellen zutat:"Rucola" name:"z3" menge:1.0
+    bereitstellen zutat:"Minirömersalat" name:"z4" menge:1.0
+    bereitstellen zutat:"Basilikum" name:"z5" menge:1.0
+    bereitstellen zutat:"Mozerella" name:"z6" menge:"250g"
+    bereitstellen zutat:"Essig" name:"z7" menge:"6 EL"
+    bereitstellen zutat:"Salz" name:"z8" menge:"0.25 EL"
+    bereitstellen zutat:"Pfeffer" name:"z9" menge:"0.25 EL"
+    bereitstellen zutat:"Öl" name:"z10" menge:"6 EL"
+    bereitstellen zutat:"Salat" name:"p1"
+    bereitstellen geraet:"Platte" name:"g1"
+
+    randomsequence
+        sequence
+            waschen zutat:"z1"
+            zerkleinern zutat:"z1" form:"scheiben"
+        sequence
+            waschen zutat:"z2"
+            zerkleinern zutat:"z2" form:"spalten"
+        sequence
+            parallel policy:"sequence" orchestrator:"join"
+                waschen zutat:"z3"
+                waschen zutat:"z4"
+            untilsuccess
+                trocknen zutat:"p1"
+            zerkleinern zutat:"z4" form:"streifen"
+        sequence
+            waschen zutat:"z5"
+            zupfen zutat:"z5"
+        zupfen zutat:"z6"
+    randomsequence
+            hinzugeben zutat:"z5" geraet:"platte"
+            hinzugeben zutat:"z4" geraet:"platte"
+            hinzugeben zutat:"z3" geraet:"platte"
+            hinzugeben zutat:"z1" geraet:"platte"
+            hinzugeben zutat:"z2" geraet:"platte"
+            hinzugeben produkt:"salat mit parmaschinken" geraet:"platte"
+    randomsequence
+            hinzugeben zutat:"z7" produkt:"salat"
+            hinzugeben zutat:"z8" produkt:"salat"
+            hinzugeben zutat:"z9" produkt:"salat"
+            hinzugeben zutat:"z10" produkt:"salat"

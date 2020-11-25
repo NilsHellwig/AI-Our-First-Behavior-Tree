@@ -2,33 +2,31 @@ package zubereitung;
 
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
-import kuechengeraet.Kuechengeraet;
+import com.badlogic.gdx.ai.btree.annotation.TaskAttribute;
+import rezept.Rezept;
 import zutat.Zutat;
 
-import java.util.ArrayList;
-
 public class Roesten extends LeafTask {
+    // Diesen Roesten Task nutzen wir in unserer .tree Datei!
+    @TaskAttribute public String zutat;
+    @TaskAttribute public String geraet;
+    @TaskAttribute public Integer time;
 
-    // Dieser Roesten Task eignet sich nur für den programmatischen Ansatz!
-    ArrayList<Zutat> zutaten;
-    Kuechengeraet k;
-
-    public Roesten(Zutat z, Kuechengeraet k) {
-        super();
-
-        this.k = k;
-
-        zutaten = new ArrayList<Zutat>();
-        zutaten.add(z);
-    }
     public Status execute() {
-        System.out.println("ich röste " + zutaten.size() + " Zutaten.");
+        Rezept recipe = (Rezept)getObject();
+        Zutat z = recipe.getIngredient(zutat);
 
-        for (Zutat z : zutaten) {
-            z.verbrauchen();
+        if(time > 0){
+            System.out.println("ich röste " + z + " in " + recipe.getTool(geraet));
+            time--;
+            return Status.RUNNING;
         }
+        else {
+            z.verbrauchen();
+            z.verarbeiten("geroestet");
 
-        return Status.SUCCEEDED;
+            return Status.SUCCEEDED;
+        }
     }
 
     protected Task copyTo(Task task) {

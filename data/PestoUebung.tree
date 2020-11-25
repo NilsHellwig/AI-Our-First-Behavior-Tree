@@ -16,41 +16,64 @@
 
 # Mit Salz und Pfeffer abschmecken
 
-# Bisher ausführbarer Behavior Tree:
-
-import roesten:"zubereitung.RoestenText"
-
-sequence
-    roesten zutat:"Pinienkerne" geraet:"Pfanne"
+import roesten:"zubereitung.Roesten"
+import verbraucht?:"zubereitung.CheckVerbraucht"
+import geroestet?:"zubereitung.CheckGeroestet"
+import bereitstellen:"zubereitung.Bereitstellen"
+import herausnehmen:"zubereitung.Herausnehmen"
+import auskuehlenLassen:"zubereitung.Auskuehlen"
+import hinzugeben:"zubereitung.Hinzugeben"
+import schaelen:"zubereitung.Schaelen"
+import zerkleinern:"zubereitung.Zerkleinern"
+import waschen:"zubereitung.Waschen"
+import trocknen:"zubereitung.Trocknen"
+import zupfen:"zubereitung.Zupfen"
+import reiben:"zubereitung.Reiben"
+import puerieren:"zubereitung.Puerieren"
+import abschmecken:"zubereitung.Abschmecken"
+import SchmecktGut?:"zubereitung.CheckGeschmack"
+import servieren:"zubereitung.Servieren"
 
 # Unser gemeinsam erarbeiteter Tree für das Pesto Rezept. Die einzelnen Tasks sind noch nicht implementiert.
-# sequence
-#    parallel
-#        sequence
-#            roesten zutat:"Pinienkern" geraet:"Pfanne"
-#            parallel policy:"sequence" orchestrator:"resume"
-#                PinienkerneBraun?
-#                herausnehmen zutat: "Pinienkern"
-#            auskühlenLassen zutat: "Pinienkern"
-#            hinzugeben zutat:"Pinienkern" geraet:"Rührbecher"
-#        RandomSequence
-#            sequence
-#                waschen zutat:"Basilikum"
-#                trocken zutat:"Basilikum"
-#                zupfen zutat:"Basilikum"
-#                hinzugeben zutat:"Basilikum" geraet:"Rührbecher"
-#            sequence
-#                schälen zutat:"Knoblauch"
-#                zerkleinern zutat:"Knoblauch" art:"grob"
-#                hinzugeben zutat:"Knoblauch" geraet:"Rührbecher"
-#            sequence
-#                reiben zutat:"Parmesan"
-#                hinzugeben zutat:"Parmesan" geraet:"Rührbecher"
-#            hinzugeben zutat:"Öl" geraet:"Rührbecher"
-#    puerieren geraet:"Pürierstab"
-#    sequence
-#        invert
-#            SchmecktGut?
-#        abschmecken zutat:"Salz"
-#        abschmecken zutat:"Pfeffer"
-#    servieren
+
+sequence
+    bereitstellen zutat:"Pinienkern" name:"z1" menge:"1 EL"
+    bereitstellen zutat:"Basilikum" name:"z2" menge:"5 EL"
+    bereitstellen zutat:"Knoblauch" name:"z3" menge:"0.5 EL"
+    bereitstellen zutat:"Parmesan" name:"z4" menge:"8 EL"
+    bereitstellen zutat:"Oel" name:"z5" menge:"6 EL"
+    bereitstellen zutat:"Salz" name:"z6" menge:"0.25 EL"
+    bereitstellen zutat:"Pfeffer" name:"z7" menge:"0.25 EL"
+    bereitstellen geraet:"Pfanne" name:"g1"
+    bereitstellen geraet:"Ruehrbecher" name:"g2"
+    bereitstellen geraet:"Puerierstab" name:"g3"
+    parallel policy:"sequence" # orchestrator:"join"
+        sequence
+            roesten zutat:"z1" geraet:"g1" time:5
+            parallel policy:"sequence" # orchestrator:"join"
+                geroestet? zutat:"z1"
+                herausnehmen zutat:"z1" geraet:"g1"
+            auskuehlenLassen zutat:"z1"
+            hinzugeben zutat:"z1" geraet:"g2"
+        randomSequence
+            sequence
+                waschen zutat:"z2"
+                trocknen zutat:"z2"
+                zupfen zutat:"z2"
+                hinzugeben zutat:"z2" geraet:"g2"
+            sequence
+                schaelen zutat:"z3"
+                zerkleinern zutat:"z3" art:"grob"
+                hinzugeben zutat:"z3" geraet:"g2"
+            sequence
+                reiben zutat:"z4"
+                hinzugeben zutat:"z4" geraet:"g2"
+            hinzugeben zutat:"z5" geraet:"g2"
+    puerieren geraet:"g3" ergebnis:"p1" typ:"Pesto"
+    alwaysSucceed
+        selector
+            SchmecktGut? masse:"p1"
+            sequence
+                abschmecken masse:"p1" zutat:"z6"
+                abschmecken masse:"p1" zutat:"z7"
+    servieren

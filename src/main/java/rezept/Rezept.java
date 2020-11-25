@@ -1,62 +1,73 @@
 package rezept;
 
-import behaviortree.RecipeTree;
 import com.badlogic.gdx.ai.btree.BehaviorTree;
-import com.badlogic.gdx.ai.btree.branch.Sequence;
+import com.badlogic.gdx.ai.btree.utils.BehaviorTreeParser;
 import kuechengeraet.Kuechengeraet;
-import kuechengeraet.Pfanne;
-import quantitaet.Essloeffel;
-import zubereitung.CheckVerbraucht;
-import zubereitung.Roesten;
-import zutat.Pinienkern;
 import zutat.Zutat;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class Rezept {
-    private String name;
     private HashMap<String, Kuechengeraet> geraete;
     private HashMap<String, Zutat> zutaten;
-    private BehaviorTree<RecipeTree> instructions;
 
-    public Rezept(String n) {
+    private String name;
+    private String tree_file_name;
+    private BehaviorTree<Rezept> instructions;
+
+    public Rezept(String n, String f) {
+        tree_file_name = f;
         name = n;
+    }
 
-        geraete = new HashMap<String, Kuechengeraet>();
+    public void init() throws FileNotFoundException {
+        Reader reader = new FileReader(tree_file_name);
+        BehaviorTreeParser<Rezept> parser = new BehaviorTreeParser<Rezept>(BehaviorTreeParser.DEBUG_HIGH);
+        instructions = parser.parse(reader, this);
+
         zutaten = new HashMap<String, Zutat>();
-
-        instructions = new RecipeTree("Pesto", instructions);
+        geraete = new HashMap<String, Kuechengeraet>();
     }
 
-    public void init() {
-        Zutat z = new Pinienkern(new Essloeffel(1));
-        Kuechengeraet k = new Pfanne();
-
-        geraete.put(k.bezeichner(), k);
-        zutaten.put(z.bezeichner(), z);
-
-        Sequence sequence = new Sequence();
-
-        sequence.addChild(new CheckVerbraucht(z));
-        sequence.addChild(new Roesten(z,k));
-
-        instructions.addChild(sequence);
-    }
-
-    public BehaviorTree<RecipeTree> getTree() {
+    public BehaviorTree<Rezept> getTree() throws FileNotFoundException {
         return instructions;
     }
 
-    public void status() {
-        Set<Map.Entry<String, Zutat>> zs = zutaten.entrySet();
+    public void addIngredient(Zutat z) {
+        zutaten.put(z.id(), z);
+    }
 
-        for (Map.Entry<String, Zutat>s: zs) {
-            System.out.println(s.getValue().bezeichner() + " ist verbaucht: " + s.getValue().istVerbraucht());
+    public Zutat getIngredient(String n) {
+        return zutaten.get(n);
+    }
+
+    public Kuechengeraet getTool(String n) {
+        return geraete.get(n);
+    }
+
+    public void addTool(Kuechengeraet k) {
+        geraete.put(k.bezeichner(), k);
+    }
+
+    public void status() {
+        Set<Map.Entry<String, Zutat>> ingrs = zutaten.entrySet();
+        for (Map.Entry<String, Zutat> e : ingrs) {
+            e.getValue().facts(false);
+        }
+
+        Set<Map.Entry<String, Kuechengeraet>> tools = geraete.entrySet();
+        for (Map.Entry<String, Kuechengeraet> e : tools) {
+            e.getValue().facts(false);
         }
     }
+
     public String name() {
         return name;
     }
 }
+

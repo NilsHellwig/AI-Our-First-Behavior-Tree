@@ -1,0 +1,121 @@
+Rezept 1 - Bärlauch-Lemon Pesto:
+
+Sequence
+	RandomSequence
+		Parmesan Reiben
+		Sequence
+			Bärlauch Waschen
+			Bärlauch Trocknen
+			80g Bärlauch Zupfen
+		Zitrone Reiben
+	RandomSequence
+		Parmesan zu Rührbecher Hinzugeben
+		Bärlauch zu Rührbecher Hinzugeben
+		Zitrone zu Rührbecher Hinzugeben
+	Mit Pürierstab Pürieren
+	RandomSequence
+		UntilSuccess
+			Sequence
+				Salz Hinzugeben
+				Schmeckt Gut (salzig)?
+		UntilSuccess
+			Sequence
+				Pfeffer Hinzugeben
+				Schmeckt Gut (pfeffrig)?
+		1 TL Zitronensaft Hinzugeben
+	UntilFail
+		Sequence
+			Ist noch Pesto da?
+			Neues Glas Verwenden
+				UntilFail
+					Sequence
+						Ist Glas noch nicht voll?
+						Pesto zu Glas Hinzugeben
+			Olivenöl zu Glas Hinzugeben
+			Glas Verschließen
+	Pesto Lagern
+
+Rezept 2 - Nektarinen-Mozzarella Salat:
+
+Sequence
+	RandomSequence
+		Sequence
+			Tomate Waschen
+			Tomate in Scheiben Schneiden
+		Sequence
+			Nektarine Waschen
+			Nektarine in Spalten Schneiden
+		Sequence
+			Parallel policy:“sequence“ orchestrator:“join“
+				Rucola Waschen
+				Minirömersalat Waschen
+			UntilSuccess # Je nachdem, wie der Trocknen Task umgesetzt wird, ist hier der Decorator nicht nötig
+				Salat Trocknen
+			Minirömersalat in Streifen Schneiden
+		Sequence
+			Basilikum waschen
+			Basilikum zupfen
+		Mozzarella zupfen
+	RandomSequence
+		Basilikum zu Platte Hinzugeben
+		Minirömersalat zu Platte Hinzugeben
+		Rucola zu Platte Hinzugeben
+		Tomate zu Platte Hinzugeben
+		Nektarine zu Platte Hinzugeben
+		Salat mit Parmaschinken auf Platte Anrichten
+	RandomSequence
+		Essig zu Salat Hinzugeben
+		Salz zu Salat Hinzugeben
+		Pfeffer zu Salat Hinzugeben
+		Öl zu Salat Hinzugeben
+
+
+Rezept 3 - Zucchini-Basilikum Pesto:
+
+Sequence
+	Parallel
+		Sequence
+			Sequence
+				Knoblauch Schälen
+				Zucchini Waschen
+				Basilikum Waschen
+				UntilSuccess
+					Sequence
+						Basilikum Trocknen
+						Ist Basilikum Trocken?
+			RandomSequence
+				Knoblauch fein Würfeln
+				Parmesan grob Würfeln
+				Zucchini fein Würfeln
+				Sequence
+					Basilikum Trocknen 
+					Basilikum Zupfen
+		Sequence
+			Mandeln zu Pfanne Hinzugeben
+			Kürbiskerne zu Pfanne Hinzugeben
+			UntilSuccess	
+				Sequence
+					Unter wenden Rösten
+					Ist Geröstet?
+			Kürbiskerne aus Pfanne Herausnehmen
+			Mandeln aus Pfanne Herausnehmen
+	RandomSequence
+		Knoblauch zu Rührbecher Hinzugeben
+		Zucchini zu Rührbecher Hinzugeben
+		Basilikum zu Rührbecher Hinzugeben
+		Parmesan zu Rührbecher Hinzugeben
+		Mandeln zu Rührbecher Hinzugeben
+		Kürbiskerne zu Rührbecher Hinzugeben
+		250ml Olivenöl zu Rührbecher Hinzugeben
+	Mit Pürierstab Pürieren 
+	Selector
+		Schmeckt Pesto Gut?
+		Sequence
+			Pesto Mit Salz Würzen
+			Pesto Mit Pfeffer Würzen
+	Sequence
+		Pesto zu Glas Hinzugeben
+		Pesto Glatt Streichen
+		Öl Hinzugeben
+		fest Verschließen
+	Kühl und Trocken Lagern		

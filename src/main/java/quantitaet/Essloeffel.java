@@ -8,4 +8,12 @@ public class Essloeffel extends Quantitaet {
     public Essloeffel(double amount) {
         super("EL", amount);
     }
+
+    public Essloeffel(String name, double amount) {
+        super(name, amount);
+    }
+
+    public String toString() {
+        return name;
+    }
 }
