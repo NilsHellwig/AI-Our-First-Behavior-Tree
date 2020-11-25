@@ -30,12 +30,14 @@ public class Anrichten extends LeafTask {
         if (k != null) {
             System.out.println("Ich richte mit " + geraet+ " an");
 
-            Class<?> clazz = null;
+            Class<?> ergebnisClass = null;
             try {
-                clazz = forName("zutat.produkt." + typ);
-                Zutat z = (Zutat)clazz.getDeclaredConstructor().newInstance();
-                z.setName(ergebnis);
-                recipe.addIngredient(z);
+                ergebnisClass = forName("zutat.produkt." + typ);
+                Zutat ergebnisIngredient = (Zutat)ergebnisClass.getDeclaredConstructor().newInstance();
+                ergebnisIngredient.setName(ergebnis);
+                recipe.addIngredient(ergebnisIngredient);
+                Zutat zutatIngredient = recipe.getIngredient(zutat);
+                zutatIngredient.verbrauchen();
                 return Status.SUCCEEDED;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();

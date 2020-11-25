@@ -40,6 +40,7 @@ sequence
             zupfen zutat:"z5"
         zupfen zutat:"z6"
     randomSequence
+        hinzugeben zutat:"z6" geraet:"g1"
         hinzugeben zutat:"z5" geraet:"g1"
         hinzugeben zutat:"z4" geraet:"g1"
         hinzugeben zutat:"z3" geraet:"g1"

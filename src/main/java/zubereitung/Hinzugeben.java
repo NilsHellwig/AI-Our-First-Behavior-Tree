@@ -16,7 +16,6 @@ public class Hinzugeben extends LeafTask {
     public String produkt;
 
     public Status execute() {
-        System.out.println("test");
         Rezept recipe = (Rezept) getObject();
         Zutat z = recipe.getIngredient(zutat);
         Zutat produktzutat = recipe.getIngredient(produkt);
