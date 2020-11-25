@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 public class Main {
     public static void main(String [] args) throws FileNotFoundException {
         Rezept myR;
-        myR = new Rezept("Pesto", "data/PestoUebung.tree");
+        myR = new Rezept("Pesto", "data/development.tree");
 
         BehaviorTree<Rezept> r;
 
