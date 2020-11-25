@@ -3,6 +3,7 @@ import zerkleinern:"zubereitung.Zerkleinern"
 import trocknen:"zubereitung.Trocknen"
 import zupfen:"zubereitung.Zupfen"
 import hinzugeben:"zubereitung.Hinzugeben"
+import bereitstellen:"zubereitung.Bereitstellen"
 
 sequence
     bereitstellen zutat:"Tomate" name:"z1" menge:4.0
@@ -10,7 +11,7 @@ sequence
     bereitstellen zutat:"Rucola" name:"z3" menge:1.0
     bereitstellen zutat:"Minirömersalat" name:"z4" menge:1.0
     bereitstellen zutat:"Basilikum" name:"z5" menge:1.0
-    bereitstellen zutat:"Mozerella" name:"z6" menge:"250g"
+    bereitstellen zutat:"Mozerella" name:"z6" menge:"250 g"
     bereitstellen zutat:"Essig" name:"z7" menge:"6 EL"
     bereitstellen zutat:"Salz" name:"z8" menge:"0.25 EL"
     bereitstellen zutat:"Pfeffer" name:"z9" menge:"0.25 EL"

@@ -1,7 +1,7 @@
 package zutat;
 
-public class Essig extends Zutat {
-    public Essig() {
+public class Rucola extends Zutat {
+    public Rucola() {
         super();
     }
 

@@ -1,7 +1,9 @@
-package zutat;
+package zutat.produkt;
 
-public class Essig extends Zutat {
-    public Essig() {
+import zutat.Zutat;
+
+public class Salat extends Zutat {
+    public Salat() {
         super();
     }
 
@@ -12,8 +14,7 @@ public class Essig extends Zutat {
     public void verarbeiten(String methode) {
         if (transformation.containsKey(methode)) {
             System.out.println(methode + "schon angewendet auf " + name);
-        }
-        else transformation.put(methode, Boolean.TRUE);
+        } else transformation.put(methode, Boolean.TRUE);
     }
 
     public String toString() {

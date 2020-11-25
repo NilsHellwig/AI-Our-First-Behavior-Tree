@@ -30,6 +30,7 @@ abstract public class Quantitaet {
         int len = tmp.length;
 
         if (tmp[len-1].equals("EL")) return new Essloeffel("q" + (counter++), Double.parseDouble(tmp[0]));
+        if (tmp[len-1].equals("g")) return new Gewicht("q" + (counter++), Double.parseDouble(tmp[0]));
         else return null;
     }
 }

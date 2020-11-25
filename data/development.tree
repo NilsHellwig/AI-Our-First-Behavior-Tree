@@ -1,0 +1,53 @@
+import waschen:"zubereitung.Waschen"
+import zerkleinern:"zubereitung.Zerkleinern"
+import trocknen:"zubereitung.Trocknen"
+import zupfen:"zubereitung.Zupfen"
+import hinzugeben:"zubereitung.Hinzugeben"
+import bereitstellen:"zubereitung.Bereitstellen"
+import anrichten:"zubereitung.Anrichten"
+
+sequence
+    bereitstellen zutat:"Tomate" name:"z1" menge:"4.0"
+    bereitstellen zutat:"Nektarine" name:"z2" menge:"3.0"
+    bereitstellen zutat:"Rucola" name:"z3" menge:"1.0"
+    bereitstellen zutat:"Minirömersalat" name:"z4" menge:"1.0"
+    bereitstellen zutat:"Basilikum" name:"z5" menge:"1.0"
+    bereitstellen zutat:"Mozzarella" name:"z6" menge:"250 g"
+    bereitstellen zutat:"Essig" name:"z7" menge:"6 EL"
+    bereitstellen zutat:"Salz" name:"z8" menge:"0.25 EL"
+    bereitstellen zutat:"Pfeffer" name:"z9" menge:"0.25 EL"
+    bereitstellen zutat:"Oel" name:"z10" menge:"6 EL"
+    bereitstellen zutat:"Parmaschinken" name:"z11" menge:"150 g"
+    bereitstellen geraet:"Platte" name:"g1"
+    randomSequence
+        sequence
+            waschen zutat:"z1"
+            zerkleinern zutat:"z1" art:"scheiben"
+        sequence
+            waschen zutat:"z2"
+            zerkleinern zutat:"z2" art:"spalten"
+        sequence
+            parallel policy:"sequence" #orchestrator:"join"
+                waschen zutat:"z3"
+                waschen zutat:"z4"
+            untilSuccess
+                parallel policy:"sequence" #orchestrator:"join"
+                    trocknen zutat:"z3"
+                    trocknen zutat:"z4"
+            zerkleinern zutat:"z4" art:"streifen"
+        sequence
+            waschen zutat:"z5"
+            zupfen zutat:"z5"
+        zupfen zutat:"z6"
+    randomSequence
+        hinzugeben zutat:"z5" geraet:"g1"
+        hinzugeben zutat:"z4" geraet:"g1"
+        hinzugeben zutat:"z3" geraet:"g1"
+        hinzugeben zutat:"z1" geraet:"g1"
+        hinzugeben zutat:"z2" geraet:"g1"
+    anrichten ergebnis:"salat" zutat:"z11" geraet:"g1" typ:"Salat"
+    randomSequence
+        hinzugeben zutat:"z7" produkt:"salat"
+        hinzugeben zutat:"z8" produkt:"salat"
+        hinzugeben zutat:"z9" produkt:"salat"
+        hinzugeben zutat:"z10" produkt:"salat"
