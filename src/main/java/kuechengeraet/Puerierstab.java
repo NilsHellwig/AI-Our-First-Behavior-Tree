@@ -2,6 +2,6 @@ package kuechengeraet;
 
 public class Puerierstab extends Kuechengeraet {
     public Puerierstab() {
-        bezeichnung = "Pfanne";
+        bezeichnung = "Puerierstab";
     }
 }

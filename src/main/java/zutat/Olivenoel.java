@@ -1,14 +1,8 @@
-package zutat.produkt;
+package zutat;
 
-import quantitaet.Gewicht;
-import quantitaet.Quantitaet;
-import zutat.Zutat;
-
-public class Pesto extends Zutat {
-    public Pesto() {
+public class Olivenoel extends Zutat {
+    public Olivenoel() {
         super();
-        Quantitaet q = new Gewicht(450);
-        setQuantity(q);
     }
 
     public void verbrauchen() {
@@ -18,7 +12,8 @@ public class Pesto extends Zutat {
     public void verarbeiten(String methode) {
         if (transformation.containsKey(methode)) {
             System.out.println(methode + "schon angewendet auf " + name);
-        } else transformation.put(methode, Boolean.TRUE);
+        }
+        else transformation.put(methode, Boolean.TRUE);
     }
 
     public String toString() {

@@ -26,6 +26,10 @@ abstract public class Zutat {
         quant = q;
     }
 
+    public Quantitaet getQuantity(){
+        return quant;
+    }
+
     public String id() {
         return name;
     }

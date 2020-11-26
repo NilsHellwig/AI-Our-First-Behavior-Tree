@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class Rezept {
-    private HashMap<String, Kuechengeraet> geraete;
-    private HashMap<String, Zutat> zutaten;
+    public HashMap<String, Kuechengeraet> geraete;
+    public HashMap<String, Zutat> zutaten;
 
     private String name;
     private String tree_file_name;

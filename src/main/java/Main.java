@@ -14,7 +14,7 @@ public class Main {
         rezepte[0] = "BärlauchLemonPesto";
         rezepte[1] = "NektarinenMozerellaSalat";
         rezepte[2] = "ZucchiniBasilikumPesto";
-        myR = new Rezept("Pesto", "data/"+rezepte[1]+".tree");
+        myR = new Rezept("Pesto", "data/"+rezepte[2]+".tree");
 
         BehaviorTree<Rezept> r;
 

@@ -14,6 +14,10 @@ abstract public class Quantitaet {
         menge = m;
     }
 
+    public double getQuantity(){
+        return menge;
+    }
+
     public void facts(boolean nlg) {
         if (nlg) {
             System.out.println(name + " ist " + this.getClass().getSimpleName());
@@ -31,6 +35,7 @@ abstract public class Quantitaet {
 
         if (tmp[len-1].equals("EL")) return new Essloeffel("q" + (counter++), Double.parseDouble(tmp[0]));
         if (tmp[len-1].equals("g")) return new Gewicht("q" + (counter++), Double.parseDouble(tmp[0]));
+        if (tmp[len-1].equals("TL")) return new Teeloeffel("q" + (counter++), Double.parseDouble(tmp[0]));
         else return null;
     }
 }

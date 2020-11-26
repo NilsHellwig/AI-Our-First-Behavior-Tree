@@ -3,36 +3,34 @@ package zubereitung;
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.ai.btree.annotation.TaskAttribute;
+import kuechengeraet.Glas;
 import kuechengeraet.Kuechengeraet;
 import rezept.Rezept;
 import zutat.Zutat;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.UUID;
 
 import static java.lang.Class.forName;
 
-public class Puerieren extends LeafTask {
-    @TaskAttribute public String geraet;
-    @TaskAttribute public String ergebnis;
-    @TaskAttribute public String typ;
+public class GlasZurSammlungHinzufügen extends LeafTask {
 
     public Status execute() {
-        Rezept recipe = (Rezept) getObject();
-        Kuechengeraet k;
-
-        k = recipe.getTool(geraet);
-        System.out.println("Loop:"+geraet+ergebnis+typ);
-        if (k != null) {
-            System.out.println("Ich püriere mit " + geraet);
-
+        // Wenn bereits das Glas "glas" in der Liste ist, was der Fall ist,
+        // sollte bereits ein Glas gefüllt worden sein.
+        // Das befüllte Glas wird dann mit einer unique-Id zu der Liste der Geräte hinzugefügt.
+        Rezept recipe = (Rezept)getObject();
+        Glas glas;
+        glas = (Glas) recipe.getTool("glas");
+        if (glas!=null){
             Class<?> clazz = null;
             try {
-                clazz = forName("zutat.produkt." + typ);
-                Zutat z = (Zutat)clazz.getDeclaredConstructor().newInstance();
-                z.setName(ergebnis);
-                System.out.println("Neues Ingredient namens: "+ergebnis);
-                recipe.addIngredient(z);
-                return Status.SUCCEEDED;
+                clazz = forName("kuechengeraet.Glas");
+                Glas neuesVollesGlas = (Glas) clazz.getDeclaredConstructor().newInstance();
+                String uniqueID = UUID.randomUUID().toString();
+                neuesVollesGlas.setName("glas"+uniqueID);
+                neuesVollesGlas.usedVolume = 300;
+                recipe.addTool(neuesVollesGlas);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {
@@ -44,12 +42,8 @@ public class Puerieren extends LeafTask {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-
-            return Status.FAILED;
-        } else {
-            System.out.println(k + " ist nicht verfügbar.");
-            return Status.FAILED;
         }
+        return Status.SUCCEEDED;
     }
 
     protected Task copyTo(Task task) {

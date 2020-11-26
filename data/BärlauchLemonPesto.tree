@@ -2,59 +2,61 @@ import reiben:"zubereitung.Reiben"
 import waschen:"zubereitung.Waschen"
 import trocknen:"zubereitung.Trocknen"
 import zupfen:"zubereitung.Zupfen"
-import reiben:"zubereitung.Reiben"
 import hinzugeben:"zubereitung.Hinzugeben"
 import puerieren:"zubereitung.Puerieren"
-import SchmecktGut?:"zubereitung.CheckGeschmack"
-import IstNochDa?: "zubereitung.IstNochDa"
-import istvoll?: "zubereitung.IstVoll"
-import verschließen: "zubereitung.Verschließen"
+import SchmecktGut?:"zubereitung.CheckWürzung"
+import istNochDa?: "zubereitung.CheckIstNochDa"
+import istVoll?: "zubereitung.CheckIstVoll"
+import verschliessen: "zubereitung.Verschliessen"
 import lagern: "zubereitung.Lagern"
-
+import bereitstellen:"zubereitung.Bereitstellen"
+import befuellen:"zubereitung.Befüllen"
+import glasZurSammlungHinzufuegen:"zubereitung.GlasZurSammlungHinzufügen"
 
 sequence
-    bereitstellen zutat:"Parmesan" name:"z1"
-    bereitstellen zutat:"Bärlauch" name:"z2"
-    bereitstellen zutat:"Zitrone" name:"z3"
-    bereitstellen zutat:"Parmesan" name:"z4"
-    bereitstellen zutat:"Salz" name:"z5"
-    bereitstellen zutat:"Olivenöl" name:"z6"
-    bereitstellen geraet:"Glas" name:"g1"
+    bereitstellen zutat:"Parmesan" name:"z1" menge:"75 g"
+    bereitstellen zutat:"Bärlauch" name:"z2" menge:"125 g"
+    bereitstellen zutat:"Zitrone" name:"z3" menge:"0.5"
+    bereitstellen zutat:"Salz" name:"z4" menge:"0.25 TL"
+    #wir haben <150ml + 3-6 EL> so interpretiert, dass 150 ml 20 EL entspricht und dann haben wir uns für 3 EL zusätzlich entschieden
+    bereitstellen zutat:"Olivenoel" name:"z5" menge:"23 EL"
+    bereitstellen zutat:"Pfeffer" name:"z6" menge:"0.25 TL"
     bereitstellen geraet:"Puerierstab" name:"g2"
     bereitstellen geraet:"Ruehrbecher" name:"g3"
-    bereitstellen geraet:"Reibe" name:"g4"
-
-    randomsequence
-        reiben zutat:"z1" geraet:"g4"
+    bereitstellen zutat:"Zitronensaft" name:"z7" menge:"1 TL"
+    randomSequence
+        reiben zutat:"z1"
         sequence
-           waschen zutat:"z2"
-           trocknen zutat:"z2"
-           zupfen zutat:"z2"
+            waschen zutat:"z2"
+            trocknen zutat:"z2"
+            zupfen zutat:"z2"
         reiben zutat:"z3"
-    randomsequence
-        hinzugeben zutat:"z1" geraet:"rührbecher"
-        hinzugeben zutat:"z2" geraet:"rührbecher"
-        hinzugeben zutat:"z3" geraet:"rührbecher"
-    puerieren geraet:"g2"
-    randomsequence
-        untilsuccess
-           sequence
-              hinzugeben zutat:"z5"
-              SchmecktGut? geschmack:"salzig"
-        untilsuccess
-           sequence
-              hinzugeben zutat:"z5"
-              SchmecktGut? geschmack:"salzig"
-        hinzugeben zutat:"zitronensaft" amount:"1" einheit:"tl"
-    untilfail
+    randomSequence
+        hinzugeben zutat:"z1" geraet:"g3"
+        hinzugeben zutat:"z2" geraet:"g3"
+        hinzugeben zutat:"z3" geraet:"g3"
+    puerieren geraet:"g2" ergebnis:"pesto" typ:"Pesto"
+    randomSequence
+        untilSuccess
+            sequence
+                hinzugeben zutat:"z4"
+                SchmecktGut? geschmack:"salzig" produkt:"pesto"
+        untilSuccess
+            sequence
+                hinzugeben zutat:"z6"
+                SchmecktGut? geschmack:"pfeffrig" produkt:"pesto"
+        hinzugeben zutat:"z7"
+    untilFail
         sequence
-           istnochda? zutat:"zutat"
-           neuesglasverwenden
-              untilfail
-                  sequence
-                     invert
-                        istvoll? geraet:"g1"
-                     hinzugeben produkt:"pesto" geraet:"g1"
-           hinzugeben zutat:"olivenöl" geraet:"g1"
-           verschließen art:"dicht"
-    lagern art="raumtemperatur" produkt:"pesto"
+            istNochDa? zutat:"pesto"
+            glasZurSammlungHinzufuegen
+            bereitstellen geraet:"Glas" name:"glas"
+            untilFail
+                sequence
+                    invert
+                        istVoll? geraet:"glas"
+                    istNochDa? zutat:"pesto"
+                    befuellen produkt:"pesto" glas:"glas"
+            hinzugeben zutat:"z5" geraet:"glas"
+            verschliessen geraet:"glas"
+    lagern art:"Raumtemperatur" produkt:"glas"

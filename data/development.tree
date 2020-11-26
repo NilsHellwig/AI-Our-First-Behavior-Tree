@@ -1,53 +1,56 @@
+import reiben:"zubereitung.Reiben"
 import waschen:"zubereitung.Waschen"
-import zerkleinern:"zubereitung.Zerkleinern"
 import trocknen:"zubereitung.Trocknen"
 import zupfen:"zubereitung.Zupfen"
 import hinzugeben:"zubereitung.Hinzugeben"
-import bereitstellen:"zubereitung.Bereitstellen"
-import anrichten:"zubereitung.Anrichten"
+import puerieren:"zubereitung.Puerieren"
+import SchmecktGut?:"zubereitung.CheckGeschmack"
+import IstNochDa?: "zubereitung.CheckIstNochDa"
+import istvoll?: "zubereitung.CheckIstVoll"
+import verschliessen: "zubereitung.Verschliessen"
+import lagern: "zubereitung.Lagern"
 
 sequence
-    bereitstellen zutat:"Tomate" name:"z1" menge:"4.0"
-    bereitstellen zutat:"Nektarine" name:"z2" menge:"3.0"
-    bereitstellen zutat:"Rucola" name:"z3" menge:"1.0"
-    bereitstellen zutat:"Minirömersalat" name:"z4" menge:"1.0"
-    bereitstellen zutat:"Basilikum" name:"z5" menge:"1.0"
-    bereitstellen zutat:"Mozzarella" name:"z6" menge:"250 g"
-    bereitstellen zutat:"Essig" name:"z7" menge:"6 EL"
-    bereitstellen zutat:"Salz" name:"z8" menge:"0.25 EL"
-    bereitstellen zutat:"Pfeffer" name:"z9" menge:"0.25 EL"
-    bereitstellen zutat:"Oel" name:"z10" menge:"6 EL"
-    bereitstellen zutat:"Parmaschinken" name:"z11" menge:"150 g"
-    bereitstellen geraet:"Platte" name:"g1"
+    bereitstellen zutat:"Parmesan" name:"z1"
+    bereitstellen zutat:"Bärlauch" name:"z2"
+    bereitstellen zutat:"Zitrone" name:"z3"
+    bereitstellen zutat:"Salz" name:"z4"
+    bereitstellen zutat:"Olivenoel" name:"z5"
+    bereitstellen geraet:"Glas" name:"g1"
+    bereitstellen geraet:"Puerierstab" name:"g2"
+    bereitstellen geraet:"Ruehrbecher" name:"g3"
+    bereitstellen geraet:"Reibe" name:"g4"
     randomSequence
+        reiben zutat:"z1" geraet:"g4"
         sequence
-            waschen zutat:"z1"
-            zerkleinern zutat:"z1" art:"scheiben"
-        sequence
-            waschen zutat:"z2"
-            zerkleinern zutat:"z2" art:"spalten"
-        sequence
-            parallel policy:"sequence" #orchestrator:"join"
-                waschen zutat:"z3"
-                waschen zutat:"z4"
-            untilSuccess
-                parallel policy:"sequence" #orchestrator:"join"
-                    trocknen zutat:"z3"
-                    trocknen zutat:"z4"
-            zerkleinern zutat:"z4" art:"streifen"
-        sequence
-            waschen zutat:"z5"
-            zupfen zutat:"z5"
-        zupfen zutat:"z6"
+           waschen zutat:"z2"
+           trocknen zutat:"z2"
+           zupfen zutat:"z2"
+        reiben zutat:"z3"
     randomSequence
-        hinzugeben zutat:"z5" geraet:"g1"
-        hinzugeben zutat:"z4" geraet:"g1"
-        hinzugeben zutat:"z3" geraet:"g1"
-        hinzugeben zutat:"z1" geraet:"g1"
-        hinzugeben zutat:"z2" geraet:"g1"
-    anrichten ergebnis:"salat" zutat:"z11" geraet:"g1" typ:"Salat"
+        hinzugeben zutat:"z1" geraet:"rührbecher"
+        hinzugeben zutat:"z2" geraet:"rührbecher"
+        hinzugeben zutat:"z3" geraet:"rührbecher"
+    puerieren geraet:"g2"
     randomSequence
-        hinzugeben zutat:"z7" produkt:"salat"
-        hinzugeben zutat:"z8" produkt:"salat"
-        hinzugeben zutat:"z9" produkt:"salat"
-        hinzugeben zutat:"z10" produkt:"salat"
+        untilsuccess
+           sequence
+              hinzugeben zutat:"z4"
+              SchmecktGut? geschmack:"salzig"
+        untilsuccess
+           sequence
+              hinzugeben zutat:"z4"
+              SchmecktGut? geschmack:"salzig"
+        hinzugeben zutat:"zitronensaft" amount:"1" einheit:"tl"
+    untilfail
+        sequence
+           istnochda? zutat:"zutat"
+           neuesglasverwenden
+              untilfail
+                  sequence
+                     invert
+                        istvoll? geraet:"g1"
+                     hinzugeben produkt:"pesto" geraet:"g1"
+           hinzugeben zutat:"z5" geraet:"g1"
+           verschliessen art:"dicht" geraet:"g1"
+    lagern art="raumtemperatur" produkt:"pesto"

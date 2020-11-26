@@ -12,76 +12,77 @@ import servieren:"zubereitung.Servieren"
 import isttrocken?:"zubereitung.CheckTrocken"
 import roesten:"zubereitung.Roesten"
 import streichen:"zubereitung.Streichen"
-import würzen:"zubereitung.Würzen"
-import hinzugeben:"zubereitung.Hinzugeben"
-import verschließen:"zubereitung.Verschließen"
+import wuerzen:"zubereitung.Würzen"
+import verschliessen:"zubereitung.Verschliessen"
 import lagern:"zubereitung.Lagern"
 import puerieren:"zubereitung.Puerieren"
+import schaelen:"zubereitung.Schaelen"
 
 sequence
-    bereitstellen zutat:"Knoblauch" name:"z1"
-    bereitstellen zutat:"Zucchini" name:"z2"
-    bereitstellen zutat:"Basilikum" name:"z3"
-    bereitstellen zutat:"Parmesan" name:"z4"
-    bereitstellen zutat:"Zucchini" name:"z5"
-    bereitstellen zutat:"Mandeln" name:"z6"
-    bereitstellen zutat:"Kürbiskerne" name:"z7"
-    bereitstellen zutat:"Olivenöl" name:"z8"
-    bereitstellen zutat:"Salz" name:"z9"
-    bereitstellen zutat:"Pfeffer" name:"z10"
+    bereitstellen zutat:"Knoblauch" name:"z1" menge:"34"
+    bereitstellen zutat:"Zucchini" name:"z2" menge:"2"
+    bereitstellen zutat:"Basilikum" name:"z3" menge:"1"
+    bereitstellen zutat:"Parmesan" name:"z4" menge:"75 g"
+    bereitstellen zutat:"Zucchini" name:"z5" menge:"2"
+    bereitstellen zutat:"Mandeln" name:"z6" menge:"100 g"
+    bereitstellen zutat:"Kürbiskerne" name:"z7" menge:"75 g"
+    bereitstellen zutat:"Olivenöl" name:"z8" menge:"7 EL"
+    bereitstellen zutat:"Salz" name:"z9" menge:"0.25 EL"
+    bereitstellen zutat:"Pfeffer" name:"z10" menge:"0.25 EL"
     bereitstellen geraet:"Pfanne" name:"g1"
     bereitstellen geraet:"Rührbecher" name:"g2"
-    bereitstellen geraet:"Pürierstab" name:"g3"
+    bereitstellen geraet:"Puerierstab" name:"g3"
     bereitstellen geraet:"Glas" name:"g4"
     parallel
         sequence
             sequence
-                schälen zutat:"z1"
+                schaelen zutat:"z1"
                 waschen zutat:"z5"
                 waschen zutat:"z3"
-                untilsuccess
+                untilSuccess
                     sequence
                         trocknen zutat:"z3"
                         isttrocken? zutat:"z3"
-            randomsequence
-                 zerkleinern zutat:"z1" form:"würfel"
-                 zerkleinern zutat:"z4" form:"würfel"
-                 zerkleinern zutat:"z5" form:"würfel"
+            randomSequence
+                 zerkleinern zutat:"z1" art:"würfel"
+                 zerkleinern zutat:"z4" art:"würfel"
+                 zerkleinern zutat:"z5" art:"würfel"
                  sequence
                      trocknen zutat:"z3"
                      zupfen zutat:"z3"
         sequence
             hinzugeben zutat:"z6" geraet:"g1"
             hinzugeben zutat:"z7" geraet:"g1"
-            untilsuccess
+            untilSuccess
                 sequence
-                    roesten zutat:"z7"
+                    roesten zutat:"z7" time:5
                     wenden zutat:"z7"
                     geroestet? zutat:"z7"
-            untilsuccess
+            untilSuccess
                 sequence
-                    rösten zutat:"z6"
+                    roesten zutat:"z6" time:5
                     wenden zutat:"z6"
                     geroestet? zutat:"z6"
-            herausnehmen zutat:"z7" gerät:"g1"
-            herausnehmen zutat:"z6" gerät:"g1"
-    randomsequence
+            herausnehmen zutat:"z7" geraet:"g1"
+            herausnehmen zutat:"z6" geraet:"g1"
+    randomSequence
         hinzugeben zutat: "z1" geraet:"g2"
         hinzugeben zutat: "z2" geraet:"g2"
         hinzugeben zutat: "z3" geraet:"g2"
         hinzugeben zutat: "z4" geraet:"g2"
+        hinzugeben zutat: "z5" geraet:"g2"
         hinzugeben zutat: "z6" geraet:"g2"
         hinzugeben zutat: "z7" geraet:"g2"
-        hinzugeben zutat: "z8" geraet:"g2" amount: "250" einheit:"ml"
-    puerieren geraet:"g3"
-    selector:
-        schmecktgut? produkt:"pesto"
+        hinzugeben zutat: "z8" geraet:"g2"
+    puerieren geraet:"g3" ergebnis:"pesto" typ:"Pesto"
+    selector
+        schmecktgut? masse:"pesto"
         sequence
-            würzen zutat:"z9" produkt:"pesto"
-            würzen zutat:"z10" produkt:"pesto"
+            wuerzen zutat:"z9" produkt:"pesto"
+            wuerzen zutat:"z10" produkt:"pesto"
     sequence
-        hinzugeben produkt:"pesto" gerät:"g4"
+        hinzugeben produkt:"pesto" geraet:"g4"
         streichen produkt:"pesto" art:"glatt"
         hinzugeben zutat:"z8" produkt:"pesto"
-        verschließen art:"fest"
+        verschliessen geraet:"g4"
     lagern produkt:"g4" art:"kühl und trocken"
