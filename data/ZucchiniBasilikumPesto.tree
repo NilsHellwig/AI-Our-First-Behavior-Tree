@@ -23,12 +23,11 @@ sequence
     bereitstellen zutat:"Zucchini" name:"z2" menge:"2"
     bereitstellen zutat:"Basilikum" name:"z3" menge:"1"
     bereitstellen zutat:"Parmesan" name:"z4" menge:"75 g"
-    bereitstellen zutat:"Zucchini" name:"z5" menge:"2"
-    bereitstellen zutat:"Mandeln" name:"z6" menge:"100 g"
-    bereitstellen zutat:"Kürbiskerne" name:"z7" menge:"75 g"
-    bereitstellen zutat:"Olivenöl" name:"z8" menge:"7 EL"
-    bereitstellen zutat:"Salz" name:"z9" menge:"0.25 EL"
-    bereitstellen zutat:"Pfeffer" name:"z10" menge:"0.25 EL"
+    bereitstellen zutat:"Mandeln" name:"z5" menge:"100 g"
+    bereitstellen zutat:"Kürbiskerne" name:"z6" menge:"75 g"
+    bereitstellen zutat:"Olivenöl" name:"z7" menge:"7 EL"
+    bereitstellen zutat:"Salz" name:"z8" menge:"0.25 EL"
+    bereitstellen zutat:"Pfeffer" name:"z9" menge:"0.25 EL"
     bereitstellen geraet:"Pfanne" name:"g1"
     bereitstellen geraet:"Rührbecher" name:"g2"
     bereitstellen geraet:"Puerierstab" name:"g3"
@@ -37,7 +36,7 @@ sequence
         sequence
             sequence
                 schaelen zutat:"z1"
-                waschen zutat:"z5"
+                waschen zutat:"z2"
                 waschen zutat:"z3"
                 untilSuccess
                     sequence
@@ -46,25 +45,25 @@ sequence
             randomSequence
                  zerkleinern zutat:"z1" art:"würfel"
                  zerkleinern zutat:"z4" art:"würfel"
-                 zerkleinern zutat:"z5" art:"würfel"
+                 zerkleinern zutat:"z2" art:"würfel"
                  sequence
                      trocknen zutat:"z3"
                      zupfen zutat:"z3"
         sequence
+            hinzugeben zutat:"z5" geraet:"g1"
             hinzugeben zutat:"z6" geraet:"g1"
-            hinzugeben zutat:"z7" geraet:"g1"
-            untilSuccess
-                sequence
-                    roesten zutat:"z7" time:5
-                    wenden zutat:"z7"
-                    geroestet? zutat:"z7"
             untilSuccess
                 sequence
                     roesten zutat:"z6" time:5
                     wenden zutat:"z6"
                     geroestet? zutat:"z6"
-            herausnehmen zutat:"z7" geraet:"g1"
+            untilSuccess
+                sequence
+                    roesten zutat:"z5" time:5
+                    wenden zutat:"z5"
+                    geroestet? zutat:"z5"
             herausnehmen zutat:"z6" geraet:"g1"
+            herausnehmen zutat:"z5" geraet:"g1"
     randomSequence
         hinzugeben zutat: "z1" geraet:"g2"
         hinzugeben zutat: "z2" geraet:"g2"
@@ -73,16 +72,15 @@ sequence
         hinzugeben zutat: "z5" geraet:"g2"
         hinzugeben zutat: "z6" geraet:"g2"
         hinzugeben zutat: "z7" geraet:"g2"
-        hinzugeben zutat: "z8" geraet:"g2"
     puerieren geraet:"g3" ergebnis:"pesto" typ:"Pesto"
     selector
         schmecktgut? masse:"pesto"
         sequence
+            wuerzen zutat:"z8" produkt:"pesto"
             wuerzen zutat:"z9" produkt:"pesto"
-            wuerzen zutat:"z10" produkt:"pesto"
     sequence
         hinzugeben produkt:"pesto" geraet:"g4"
         streichen produkt:"pesto" art:"glatt"
-        hinzugeben zutat:"z8" produkt:"pesto"
+        hinzugeben zutat:"z7" produkt:"pesto"
         verschliessen geraet:"g4"
     lagern produkt:"g4" art:"kühl und trocken"
