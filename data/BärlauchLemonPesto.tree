@@ -39,13 +39,13 @@ sequence
     randomSequence
         untilSuccess
             sequence
-                hinzugeben zutat:"z4"
+                hinzugeben zutat:"z4" geraet:"g3"
                 SchmecktGut? geschmack:"salzig" produkt:"pesto"
         untilSuccess
             sequence
-                hinzugeben zutat:"z6"
+                hinzugeben zutat:"z6" geraet:"g3"
                 SchmecktGut? geschmack:"pfeffrig" produkt:"pesto"
-        hinzugeben zutat:"z7"
+        hinzugeben zutat:"z7" geraet:"g3"
     untilFail
         sequence
             istNochDa? zutat:"pesto"

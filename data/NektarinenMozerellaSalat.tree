@@ -27,11 +27,11 @@ sequence
             waschen zutat:"z2"
             zerkleinern zutat:"z2" art:"spalten"
         sequence
-            parallel policy:"sequence" #orchestrator:"join"
+            parallel policy:"sequence"
                 waschen zutat:"z3"
                 waschen zutat:"z4"
             untilSuccess
-                parallel policy:"sequence" #orchestrator:"join"
+                parallel policy:"sequence"
                     trocknen zutat:"z3"
                     trocknen zutat:"z4"
             zerkleinern zutat:"z4" art:"streifen"

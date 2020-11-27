@@ -29,7 +29,7 @@ public class GlasZurSammlungHinzufügen extends LeafTask {
                 Glas neuesVollesGlas = (Glas) clazz.getDeclaredConstructor().newInstance();
                 String uniqueID = UUID.randomUUID().toString();
                 neuesVollesGlas.setName("glas"+uniqueID);
-                neuesVollesGlas.usedVolume = 300;
+                neuesVollesGlas.usedVolume = glas.usedVolume;
                 recipe.addTool(neuesVollesGlas);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();

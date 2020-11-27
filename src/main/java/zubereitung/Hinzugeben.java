@@ -17,9 +17,12 @@ public class Hinzugeben extends LeafTask {
 
     public Status execute() {
         Rezept recipe = (Rezept) getObject();
-        Zutat z = recipe.getIngredient(zutat);
         Zutat produktzutat = recipe.getIngredient(produkt);
-        System.out.println("Zutat: "+zutat+" Produkt: "+produkt+" Gerät: "+geraet);
+        if (zutat==null && produkt!=null && geraet!=null){
+            System.out.println("ich gebe " + produkt + " in " + geraet);
+            return Status.SUCCEEDED;
+        }
+        Zutat z = recipe.getIngredient(zutat);
         if (z!=null && produktzutat!=null){
             System.out.println("ich gebe " + z + " zu " + produkt);
             z.verbrauchen();

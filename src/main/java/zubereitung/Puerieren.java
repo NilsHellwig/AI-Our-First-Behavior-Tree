@@ -21,7 +21,6 @@ public class Puerieren extends LeafTask {
         Kuechengeraet k;
 
         k = recipe.getTool(geraet);
-        System.out.println("Loop:"+geraet+ergebnis+typ);
         if (k != null) {
             System.out.println("Ich püriere mit " + geraet);
 

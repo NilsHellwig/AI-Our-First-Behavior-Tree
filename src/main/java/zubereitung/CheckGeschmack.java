@@ -6,7 +6,6 @@ import com.badlogic.gdx.ai.btree.annotation.TaskAttribute;
 import rezept.Rezept;
 import zutat.Zutat;
 
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class CheckGeschmack extends LeafTask {
@@ -25,10 +24,10 @@ public class CheckGeschmack extends LeafTask {
         else {
             Scanner s = new Scanner(System.in);
 
-            System.out.print("Willst du noch abschmecken: (j/n): ");
+            System.out.print("Schmeckt "+masse+" gut?: (j/n): ");
             String input = s.nextLine();
-            if (input.startsWith("j")) return Status.FAILED;
-            else return Status.SUCCEEDED;
+            if (input.startsWith("j")) return Status.SUCCEEDED;
+            else return Status.FAILED;
         }
     }
 

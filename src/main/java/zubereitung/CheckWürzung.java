@@ -16,7 +16,6 @@ public class CheckWürzung extends LeafTask {
     public Status execute() {
         Rezept recipe = (Rezept)getObject();
         Zutat z = recipe.getIngredient(produkt);
-        System.out.println("CheckWürzung "+ z);
         if (z == null) {
             System.out.println(z + " kommt im Rezept nicht vor.");
             return Status.FAILED;

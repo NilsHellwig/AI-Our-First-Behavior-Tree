@@ -7,8 +7,6 @@ import kuechengeraet.Kuechengeraet;
 import quantitaet.Quantitaet;
 import rezept.Rezept;
 import zutat.Zutat;
-
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import static java.lang.Class.forName;
